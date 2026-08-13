@@ -1,0 +1,6 @@
+{
+  "name": "墨香书影",
+  "description": "沉浸式 Zen 风格个人书房与阅读管理应用",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
