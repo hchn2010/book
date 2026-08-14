@@ -27,6 +27,7 @@ import com.example.data.model.Book
 import com.example.ui.MainViewModel
 import com.example.ui.components.GridBookItem
 import com.example.ui.components.HeroCurrentlyReadingCard
+import com.example.ui.components.CategoryFilterChips
 import com.example.ui.components.InkSearchBar
 import com.example.ui.theme.InkPrimary
 import com.example.ui.theme.PaperBeige
@@ -106,7 +107,9 @@ fun BookshelfScreen(
             // Search Bar & Categories
             InkSearchBar(
                 query = searchQuery,
-                onQueryChange = { viewModel.onSearchQueryChange(it) },
+                onQueryChange = { viewModel.onSearchQueryChange(it) }
+            )
+            CategoryFilterChips(
                 categories = categories,
                 selectedCategory = selectedCategory,
                 onCategorySelected = { viewModel.onCategorySelect(it) }

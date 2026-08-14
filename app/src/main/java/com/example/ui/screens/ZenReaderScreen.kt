@@ -1,5 +1,6 @@
 package com.example.ui.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -37,8 +38,10 @@ import com.example.ui.theme.ZenGreenBg
 fun ZenReaderScreen(
     viewModel: MainViewModel,
     initialBook: Book? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit = {}
 ) {
+    BackHandler(enabled = true, onBack = onBack)
     val isTimerRunning by viewModel.isTimerRunning.collectAsState()
     val timerElapsedSeconds by viewModel.timerElapsedSeconds.collectAsState()
     val activeBook by viewModel.activeTimerBook.collectAsState()

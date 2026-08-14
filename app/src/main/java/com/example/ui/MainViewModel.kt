@@ -23,6 +23,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // All Books & Filtered Books
     private val rawBooks: StateFlow<List<Book>>
+    val allBooks: StateFlow<List<Book>> get() = rawBooks
     val filteredBooks: StateFlow<List<Book>>
 
     val currentlyReadingBooks: StateFlow<List<Book>>

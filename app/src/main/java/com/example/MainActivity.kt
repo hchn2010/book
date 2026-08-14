@@ -132,16 +132,8 @@ fun MainAppScreen(viewModel: MainViewModel) {
             when {
                 isZenReaderOpen -> {
                     ZenReaderScreen(
-                        book = activeTimerBook ?: selectedBook,
-                        isTimerRunning = isTimerRunning,
-                        timerElapsedSeconds = timerElapsedSeconds,
-                        readerPaperMode = readerPaperMode,
-                        readerFontSizeSp = readerFontSizeSp,
-                        onStartTimer = { viewModel.startTimer(activeTimerBook ?: selectedBook) },
-                        onPauseTimer = { viewModel.pauseTimer() },
-                        onStopAndSaveTimer = { viewModel.stopAndSaveTimer() },
-                        onSetPaperMode = { viewModel.setPaperMode(it) },
-                        onChangeFontSize = { viewModel.changeFontSize(it) },
+                        viewModel = viewModel,
+                        initialBook = activeTimerBook ?: selectedBook,
                         onBack = { isZenReaderOpen = false }
                     )
                 }
@@ -188,7 +180,7 @@ fun MainAppScreen(viewModel: MainViewModel) {
     if (showAddBookDialog) {
         AddBookDialog(
             onDismiss = { showAddBookDialog = false },
-            onConfirm = { newBook ->
+            onSave = { newBook ->
                 viewModel.saveBook(newBook)
                 showAddBookDialog = false
             }
