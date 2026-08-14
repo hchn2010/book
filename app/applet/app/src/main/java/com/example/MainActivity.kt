@@ -7,12 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Create
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.filled.AutoGraph
+import androidx.compose.material.icons.filled.FormatQuote
+import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.outlined.AutoGraph
+import androidx.compose.material.icons.outlined.FormatQuote
+import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -80,9 +80,9 @@ fun MainAppScreen(viewModel: MainViewModel) {
     var bookToUpdateProgress by remember { mutableStateOf<Book?>(null) }
 
     val navItems = listOf(
-        NavTabItem("书房", Icons.Filled.Home, Icons.Outlined.Home, "tab_bookshelf"),
-        NavTabItem("金句", Icons.Filled.Create, Icons.Outlined.Create, "tab_quotes"),
-        NavTabItem("里程碑", Icons.Filled.Star, Icons.Outlined.Star, "tab_stats")
+        NavTabItem("书房", Icons.Filled.MenuBook, Icons.Outlined.MenuBook, "tab_bookshelf"),
+        NavTabItem("金句", Icons.Filled.FormatQuote, Icons.Outlined.FormatQuote, "tab_quotes"),
+        NavTabItem("里程碑", Icons.Filled.AutoGraph, Icons.Outlined.AutoGraph, "tab_stats")
     )
 
     Scaffold(
@@ -161,18 +161,26 @@ fun MainAppScreen(viewModel: MainViewModel) {
                 else -> {
                     when (selectedTab) {
                         0 -> BookshelfScreen(
-                            viewModel = viewModel,
-                            onBookSelect = { viewModel.selectBook(it) },
+                            books = books,
+                            searchQuery = searchQuery,
+                            onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
+                            selectedCategory = selectedCategory,
+                            onCategorySelected = { viewModel.onCategorySelect(it) },
+                            selectedStatusTab = selectedStatusTab,
+                            onStatusTabSelected = { viewModel.onStatusTabSelect(it) },
+                            onBookClick = { viewModel.selectBook(it) },
+                            onFavoriteClick = { viewModel.toggleFavorite(it) },
                             onOpenAddBookDialog = { showAddBookDialog = true },
-                            onOpenProgressDialog = { bookToUpdateProgress = it },
                             onStartZenRead = {
                                 viewModel.startTimer(it)
                                 isZenReaderOpen = true
-                            }
+                            },
+                            onUpdateProgressClick = { bookToUpdateProgress = it }
                         )
                         1 -> QuotesScreen(
-                            viewModel = viewModel,
-                            onOpenAddQuoteDialog = { showAddQuoteDialog = true }
+                            quotes = quotes,
+                            onOpenAddQuoteDialog = { showAddQuoteDialog = true },
+                            onDeleteQuote = { viewModel.deleteQuote(it) }
                         )
                         2 -> StatsScreen(
                             books = allBooks,

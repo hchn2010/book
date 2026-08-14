@@ -10,9 +10,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.GridView
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.model.Book
 import com.example.ui.MainViewModel
-import com.example.ui.components.CategoryFilterChips
 import com.example.ui.components.GridBookItem
 import com.example.ui.components.HeroCurrentlyReadingCard
 import com.example.ui.components.InkSearchBar
@@ -105,16 +103,10 @@ fun BookshelfScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Search Bar
+            // Search Bar & Categories
             InkSearchBar(
                 query = searchQuery,
-                onQueryChange = { viewModel.onSearchQueryChange(it) }
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Category Chips
-            CategoryFilterChips(
+                onQueryChange = { viewModel.onSearchQueryChange(it) },
                 categories = categories,
                 selectedCategory = selectedCategory,
                 onCategorySelected = { viewModel.onCategorySelect(it) }
@@ -189,7 +181,7 @@ fun BookshelfScreen(
                                     modifier = Modifier.size(32.dp)
                                 ) {
                                     Icon(
-                                        imageVector = if (isGridView) Icons.Default.List else Icons.Default.GridView,
+                                        imageVector = Icons.Default.Menu,
                                         contentDescription = "Toggle layout",
                                         tint = SageSecondary
                                     )
@@ -209,7 +201,7 @@ fun BookshelfScreen(
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Icon(
-                                    imageVector = Icons.Default.MenuBook,
+                                    imageVector = Icons.Default.Home,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
                                     modifier = Modifier.size(48.dp)

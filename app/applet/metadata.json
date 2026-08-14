@@ -1,0 +1,6 @@
+{
+  "name": "墨香书影",
+  "description": "墨香留痕 · 沉浸式阅读与书房管理",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -2,16 +2,15 @@ package com.example.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.FormatQuote
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,43 +18,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.MainViewModel
+import com.example.data.model.BookQuote
 import com.example.ui.components.QuoteCard
-import com.example.ui.theme.InkPrimary
-import com.example.ui.theme.PaperBeige
-import com.example.ui.theme.SageSecondary
 
 @Composable
 fun QuotesScreen(
-    viewModel: MainViewModel,
+    quotes: List<BookQuote>,
     onOpenAddQuoteDialog: () -> Unit,
+    onDeleteQuote: (BookQuote) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val allQuotes by viewModel.quotes.collectAsState()
     var selectedTag by remember { mutableStateOf("全部") }
+    val tags = listOf("全部", "哲思", "经典", "诗意", "感悟", "生活")
 
-    val tags = listOf("全部", "经典", "感悟", "名言", "诗意", "哲思")
-
-    val filteredQuotes = remember(allQuotes, selectedTag) {
-        if (selectedTag == "全部") allQuotes
-        else allQuotes.filter { it.themeTag == selectedTag }
+    val filteredQuotes = if (selectedTag == "全部") {
+        quotes
+    } else {
+        quotes.filter { it.themeTag == selectedTag }
     }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-    ) {
+    Box(modifier = modifier.fillMaxSize().background(Color(0xFF1A1C1E))) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 16.dp)
         ) {
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             // Header
             Row(
@@ -63,19 +54,19 @@ fun QuotesScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column {
-                    Text(
-                        text = "墨香书摘",
-                        fontSize = 26.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = InkPrimary,
-                        fontFamily = FontFamily.Serif
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.FormatQuote,
+                        contentDescription = "Quotes",
+                        tint = Color(0xFFD0E4FF),
+                        modifier = Modifier.size(28.dp)
                     )
+                    Spacer(modifier = Modifier.width(10.dp))
                     Text(
-                        text = "辑录灵感 · 记录文字之美",
-                        fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
-                        letterSpacing = 1.sp
+                        text = "佳句卡片盒",
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFE2E2E6)
                     )
                 }
 
@@ -90,7 +81,7 @@ fun QuotesScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
-                        contentDescription = null,
+                        contentDescription = "Add",
                         modifier = Modifier.size(16.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
@@ -100,15 +91,12 @@ fun QuotesScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Tags filter
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState())
-                    .padding(vertical = 4.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            // Tag filter bar
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(bottom = 12.dp)
             ) {
-                tags.forEach { tag ->
+                items(tags) { tag ->
                     val isSelected = tag == selectedTag
                     Box(
                         modifier = Modifier
@@ -118,7 +106,7 @@ fun QuotesScreen(
                             )
                             .clickable { selectedTag = tag }
                             .padding(horizontal = 16.dp, vertical = 8.dp)
-                            .testTag("tag_filter_$tag")
+                            .testTag("quote_tag_$tag")
                     ) {
                         Text(
                             text = tag,
@@ -130,41 +118,37 @@ fun QuotesScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Quotes list
             if (filteredQuotes.isEmpty()) {
                 Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 80.dp),
+                        .fillMaxWidth()
+                        .weight(1f),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            imageVector = Icons.Default.Create,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
-                            modifier = Modifier.size(48.dp)
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            "尚无相关书摘，点击右上方“辑录”添加",
-                            fontSize = 14.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                            text = "暂无相关佳句笔记",
+                            fontSize = 15.sp,
+                            color = Color(0xFFC4C6CF)
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = "点击右上角「辑录」随时记录触动心灵的文字",
+                            fontSize = 12.sp,
+                            color = Color(0xFFC4C6CF).copy(alpha = 0.7f)
                         )
                     }
                 }
             } else {
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    contentPadding = PaddingValues(bottom = 88.dp),
-                    modifier = Modifier.fillMaxSize()
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
+                    contentPadding = PaddingValues(bottom = 30.dp),
+                    modifier = Modifier.weight(1f)
                 ) {
                     items(filteredQuotes, key = { it.id }) { quote ->
                         QuoteCard(
                             quote = quote,
-                            onDeleteQuote = { viewModel.deleteQuote(quote) }
+                            onDeleteClick = onDeleteQuote
                         )
                     }
                 }

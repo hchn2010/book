@@ -6,10 +6,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoGraph
+import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -44,7 +44,7 @@ fun StatsScreen(
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    imageVector = Icons.Default.Star,
+                    imageVector = Icons.Default.AutoGraph,
                     contentDescription = "Stats",
                     tint = Color(0xFFD0E4FF),
                     modifier = Modifier.size(28.dp)
@@ -67,13 +67,13 @@ fun StatsScreen(
                 StatCard(
                     title = "沉浸时长",
                     value = "${totalMinutes}分钟",
-                    icon = Icons.Default.Info,
+                    icon = Icons.Default.Schedule,
                     modifier = Modifier.weight(1f)
                 )
                 StatCard(
                     title = "已读页数",
                     value = "${totalPagesRead}页",
-                    icon = Icons.Default.Create,
+                    icon = Icons.Default.Book,
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -93,7 +93,7 @@ fun StatsScreen(
                 StatCard(
                     title = "正在研读",
                     value = "${readingCount}本",
-                    icon = Icons.Default.Star,
+                    icon = Icons.Default.AutoGraph,
                     modifier = Modifier.weight(1f)
                 )
             }

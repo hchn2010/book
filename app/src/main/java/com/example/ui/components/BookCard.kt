@@ -5,11 +5,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoStories
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -215,7 +216,7 @@ fun HeroCurrentlyReadingCard(
                             .testTag("btn_update_progress")
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.MenuBook,
+                            imageVector = Icons.Default.Edit,
                             contentDescription = null,
                             modifier = Modifier.size(16.dp)
                         )
@@ -236,7 +237,7 @@ fun HeroCurrentlyReadingCard(
                             .testTag("btn_zen_read")
                     ) {
                         Icon(
-                            imageVector = Icons.Default.AutoStories,
+                            imageVector = Icons.Default.PlayArrow,
                             contentDescription = null,
                             modifier = Modifier.size(16.dp)
                         )
@@ -296,7 +297,7 @@ fun GridBookItem(
                         .background(Color.Black.copy(alpha = 0.35f), shape = RoundedCornerShape(16.dp))
                 ) {
                     Icon(
-                        imageVector = if (book.isFavorite) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
+                        imageVector = if (book.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = "Favorite",
                         tint = if (book.isFavorite) SageSecondaryContainer else Color.White,
                         modifier = Modifier.size(18.dp)

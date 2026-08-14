@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.FormatQuote
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -54,7 +54,7 @@ fun QuoteCard(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Default.FormatQuote,
+                        imageVector = Icons.Default.Create,
                         contentDescription = null,
                         tint = SageSecondary,
                         modifier = Modifier.size(28.dp)
